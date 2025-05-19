@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Gradient background dari hijau gelap ke hijau muda -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#00775B"
+                android:endColor="#00AF87"
+                android:angle="135" />
+        </shape>
+    </item>
+
+    <!-- Garis-garis tipis transparan miring (bisa buat efek tekstur) -->
+    <item>
+        <shape android:shape="rectangle">
+            <size android:width="10dp" android:height="10dp" />
+            <stroke
+                android:width="1dp"
+                android:color="#33FFFFFF" /> <!-- Putih transparan -->
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+</layer-list>

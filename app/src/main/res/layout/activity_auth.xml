@@ -1,0 +1,51 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- App Logo Image -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="267dp"
+        android:layout_height="306dp"
+        android:src="@drawable/register"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:elevation="2dp"/>
+
+    <!-- Container untuk TabLayout dan ViewPager -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/logoImage"
+        android:layout_marginTop="-80dp"> <!-- Atur margin negatif untuk overlap -->
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/authTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_auth"
+            android:layout_alignParentTop="true"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/white"
+            app:tabPaddingStart="44dp"
+            app:tabPaddingEnd="44dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="40dp"
+            android:elevation="4dp"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/authViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/authTabLayout"
+            android:background="@drawable/card_auth_white"
+            android:clipToPadding="false"/>
+
+    </RelativeLayout>
+</RelativeLayout>
