@@ -1,6 +1,8 @@
 package com.example.smartfeeder
 
 import android.content.Intent
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class LoginFragment : Fragment() {
 
@@ -18,6 +23,13 @@ class LoginFragment : Fragment() {
     private lateinit var btnLogin: Button
     private lateinit var tvForgotPassword: TextView
 
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        auth = Firebase.auth
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,14 +82,22 @@ class LoginFragment : Fragment() {
     }
 
     private fun performLogin(email: String, password: String) {
-        // Here you would typically authenticate with your backend
-        // For now, we'll just simulate a successful login
-
-        Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
-
-        // Navigate to main activity after successful login
-        val intent = Intent(activity, MainActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                    Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+                    // Navigate to main activity after successful login
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
