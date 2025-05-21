@@ -1,7 +1,9 @@
 package com.example.smartfeeder
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.example.smartfeeder.LoginFragment as LoginFragment
 
 class RegisterFragment : Fragment() {
 
@@ -18,10 +25,18 @@ class RegisterFragment : Fragment() {
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnRegister: Button
 
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        auth = Firebase.auth
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
+
     ): View? {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
@@ -90,14 +105,19 @@ class RegisterFragment : Fragment() {
     }
 
     private fun performRegistration(name: String, email: String, password: String) {
-        // Here you would typically register with your backend
-        // For now, we'll just simulate a successful registration
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    Toast.makeText(context, "Registration Successful", Toast.LENGTH_SHORT).show()
+                    val user = auth.currentUser
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(context, "Registration Failed", Toast.LENGTH_SHORT).show()
 
-        Toast.makeText(context, "Registration Successful", Toast.LENGTH_SHORT).show()
-
-        // Navigate to main activity after successful registration
-        val intent = Intent(activity, MainActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+                }
+            }
     }
 }

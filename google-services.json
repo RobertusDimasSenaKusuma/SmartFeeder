@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658116032189",
+    "project_id": "smartfeeder-2001f",
+    "storage_bucket": "smartfeeder-2001f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658116032189:android:377e0fd97dbe8e301ee9d4",
+        "android_client_info": {
+          "package_name": "com.example.smartfeeder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlvsZybsr_IaEKYNMCR_EPxWButMr970M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
