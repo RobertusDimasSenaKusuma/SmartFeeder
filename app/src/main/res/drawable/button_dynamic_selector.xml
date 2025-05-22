@@ -1,0 +1,21 @@
+<!-- res/drawable/button_dynamic_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State: Disabled -->
+    <item android:state_enabled="false"
+        android:drawable="@drawable/button_dynamic_disabled" />
+
+    <!-- State: Pressed (Hover) -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/button_dynamic_pressed" />
+
+    <!-- State: Active/Selected (Checked/Selected) -->
+    <!-- Gunakan android:state_checked="true" jika ini untuk elemen seperti CheckBox/RadioButton/ToggleButton -->
+    <!-- Gunakan android:state_selected="true" jika Anda secara programatik mengatur setSelected(true) -->
+    <item android:state_selected="true"
+        android:drawable="@drawable/button_dynamic_active" />
+    <item android:state_checked="true"
+        android:drawable="@drawable/button_dynamic_active" />
+
+    <!-- State: Default (harus paling bawah) -->
+    <item android:drawable="@drawable/button_dynamic_default" />
+</selector>

@@ -1,5 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Warna Utama Anda (jika sudah ada, biarkan) -->
+    <!-- <color name="my_app_primary_orange">#FF5722</color> -->
+    <!-- <color name="my_app_primary_green">#00AF87</color> -->
+
+    <!-- Warna Inti untuk Dynamic Button -->
+    <color name="dynamic_button_color_primary">#00AF87</color>   <!-- Warna utama -->
+    <color name="dynamic_button_color_secondary">#00775B</color> <!-- Warna sekunder/gradien akhir -->
+
+    <!-- Warna untuk State Tombol Dinamis -->
+    <!-- Default State (Gradien dari primary ke secondary) -->
+    <color name="dynamic_button_gradient_start_default">@color/dynamic_button_color_primary</color>
+    <color name="dynamic_button_gradient_end_default">@color/dynamic_button_color_secondary</color>
+
+    <!-- Pressed/Hover State (Contoh: Gradien yang sedikit lebih gelap dari default) -->
+    <color name="dynamic_button_gradient_start_pressed">#009673</color> <!-- Sedikit lebih gelap dari #00AF87 -->
+    <color name="dynamic_button_gradient_end_pressed">#00604A</color> <!-- Sedikit lebih gelap dari #00775B -->
+
+    <!-- Active/Selected State (Contoh: Bisa sama dengan pressed, atau warna solid yang menonjol dari salah satu warna inti) -->
+    <color name="dynamic_button_active_background">@color/dynamic_button_color_primary</color> <!-- Solid #00AF87 -->
+    <!-- Atau jika Anda ingin gradien juga untuk state aktif, bisa sama dengan pressed: -->
+    <!-- <color name="dynamic_button_gradient_start_active">@color/dynamic_button_gradient_start_pressed</color> -->
+    <!-- <color name="dynamic_button_gradient_end_active">@color/dynamic_button_gradient_end_pressed</color> -->
+
+    <!-- Disabled State -->
+    <color name="dynamic_button_disabled_background">#D3D3D3</color> <!-- Abu-abu muda -->
+    <color name="dynamic_button_disabled_text_icon">#A0A0A0</color> <!-- Abu-abu lebih gelap untuk teks/ikon -->
+
+    <!-- Warna Teks & Ikon untuk Tombol Dinamis (umumnya putih untuk kontras dengan hijau) -->
+    <color name="dynamic_button_text_icon_default">#FFFFFF</color>
+    <color name="dynamic_button_text_icon_pressed">#FFFFFF</color>
+    <color name="dynamic_button_text_icon_active">#FFFFFF</color>
+
+    <!-- Biarkan warna lain yang sudah ada -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -9,8 +41,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white1">#F8F8F8</color>
     <color name="transparent">#00000000</color>
-    <color name="my_app_gray">#808080</color> <!-- Atau kode hex gray pilihan Anda -->
+    <color name="my_app_gray">#808080</color>
+
     <color name="my_app_gradient_start_color">#00775B</color> <!-- Dari card_general.xml -->
     <color name="my_app_gradient_end_color">#00AF87</color> <!-- Dari card_general.xml -->
     <color name="green">#00AF87</color> <!-- Dari card_general.xml -->
+
 </resources>

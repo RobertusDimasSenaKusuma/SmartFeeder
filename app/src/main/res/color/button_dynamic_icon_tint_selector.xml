@@ -1,0 +1,11 @@
+<!-- res/color/button_dynamic_icon_tint_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State: Disabled -->
+    <item android:state_enabled="false" android:color="@color/dynamic_button_disabled_text_icon" />
+    <!-- State: Active/Selected/Pressed (bisa disamakan atau dibedakan) -->
+    <item android:state_selected="true" android:color="@color/white" />
+    <item android:state_checked="true" android:color="@color/white" />
+    <item android:state_pressed="true" android:color="@color/white" />
+    <!-- State: Default -->
+    <item android:color="@color/white" />
+</selector>

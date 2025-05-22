@@ -1,15 +1,146 @@
-<!-- res/layout/fragment_settings.xml -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".Fragment.SettingsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings Fragment"
-        android:textSize="24sp"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</FrameLayout>
+        <!-- Bagian Profil Pengguna -->
+        <LinearLayout
+            android:id="@+id/profileSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp"
+            android:background="?attr/colorSurfaceContainerLowest"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/icon_add_circle"
+                android:contentDescription="Foto Profil"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+
+            <TextView
+                android:id="@+id/profileNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Pengguna Placeholder"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/profileEmailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email.placeholder@example.com"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"/>
+        </LinearLayout>
+
+        <!-- Garis Pemisah -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutlineVariant"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Daftar Menu Pengaturan -->
+        <LinearLayout
+            android:id="@+id/settingsMenuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Contoh Item Menu 1: Edit Profil -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menuEditProfile"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profil"
+                android:gravity="start|center_vertical"
+                app:icon="@drawable/icon_edit"
+                app:iconPadding="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"
+                app:iconTint="?attr/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Contoh Item Menu 2: Ubah Password -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menuChangePassword"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ubah Password"
+                android:gravity="start|center_vertical"
+                app:icon="@drawable/icon_lock"
+                app:iconPadding="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"
+                app:iconTint="?attr/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Contoh Item Menu 3: Notifikasi -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menuNotifications"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notifikasi"
+                android:gravity="start|center_vertical"
+                app:icon="@drawable/icon_notifications"
+                app:iconPadding="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"
+                app:iconTint="?attr/colorPrimary"
+                android:layout_marginBottom="16dp"/>
+            <!-- Tambahkan item menu lainnya di sini jika perlu -->
+
+        </LinearLayout>
+
+        <!-- Spacer untuk mendorong tombol Logout ke bawah -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- Tombol Logout -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logoutButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:strokeColor="?attr/colorError"
+            android:textColor="?attr/colorError"
+            android:text="Logout"
+            app:icon="@drawable/icon_logout"
+            app:iconTint="?attr/colorError"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
