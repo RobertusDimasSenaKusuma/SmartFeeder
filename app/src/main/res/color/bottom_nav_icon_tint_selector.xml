@@ -1,0 +1,7 @@
+<!-- res/color/bottom_nav_icon_tint_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Ikon saat item terpilih (aktif) -->
+    <item android:state_checked="true" android:color="@color/my_app_gradient_start_color" /> <!-- Ganti dengan warna pilihan dari gradien -->
+    <!-- Ikon saat item tidak terpilih (tidak aktif) -->
+    <item android:color="@color/my_app_gray" />
+</selector>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Gradient background dengan sudut bawah membulat -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="30dp"
+            android:bottomRightRadius="30dp"/>
+            <gradient
+                android:startColor="#00775B"
+                android:endColor="#00AF87"
+                android:angle="135" />
+        </shape>
+    </item>
+
+    <!-- Efek garis tipis dengan sudut bawah yang sama -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="30dp" />
+            <!-- Ukuran stroke tidak perlu size, cukup atur width di stroke -->
+            <stroke
+                android:width="1dp"
+                android:color="#33FFFFFF" /> <!-- Warna transparan untuk stroke -->
+            <solid android:color="@android:color/transparent" /> <!-- Membuat shape transparan agar gradient dari item sebelumnya terlihat -->
+        </shape>
+    </item>
+
+</layer-list>

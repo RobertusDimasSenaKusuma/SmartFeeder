@@ -2,4 +2,8 @@
     <string name="app_name">SmartFeeder</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="greetings">Hello Pet Owner!</string>
+    <string name="title_home">Home</string>
+    <string name="title_device">Device Connect</string>
+    <string name="title_settings">Settings</string>
 </resources>
