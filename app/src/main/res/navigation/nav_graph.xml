@@ -34,5 +34,22 @@
             app:destination="@id/registerFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/stockfeederFragment"
+        android:name="com.example.smartfeeder.Fragment.StockFeederFragment"
+        android:label="StocKFeederFragment" >
+        <action
+            android:id="@+id/action_stockfeederfragment_to_stockdrinkfragment"
+            app:destination="@id/stockDrinkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockDrinkFragment"
+        android:name="com.example.smartfeeder.Fragment.StockDrinkFragment"
+        android:label="StockDrinkFragment" >
+        <action
+            android:id="@+id/action_stockdrinkfragment_to_stockfeederfragment"
+            app:destination="@id/stockfeederFragment" />
+    </fragment>
+
 
 </navigation>

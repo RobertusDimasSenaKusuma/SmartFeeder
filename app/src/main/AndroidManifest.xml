@@ -14,6 +14,12 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".FeedControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StockFeederActivity"
+            android:exported="false" />
+        <activity
             android:name=".AuthActivity"
             android:exported="false" />
         <activity
@@ -21,9 +27,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.WithActionBar"
-            android:exported="false" />
+            android:theme="@style/AppTheme.WithActionBar" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

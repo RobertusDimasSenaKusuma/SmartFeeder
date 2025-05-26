@@ -42,6 +42,9 @@
     <color name="white1">#F8F8F8</color>
     <color name="transparent">#00000000</color>
     <color name="my_app_gray">#808080</color>
+    <color name="orange">#FF6F07</color>
+    <color name="gray">#808080</color>
+
 
     <color name="my_app_gradient_start_color">#00775B</color> <!-- Dari card_general.xml -->
     <color name="my_app_gradient_end_color">#00AF87</color> <!-- Dari card_general.xml -->
