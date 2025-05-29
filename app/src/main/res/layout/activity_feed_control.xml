@@ -7,12 +7,12 @@
 
     <!-- Header Section -->
     <RelativeLayout
-        android:id="@+id/headerSection"
+        android:id="@+id/headerSection1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_splash_decor_radius_bottom"
-        android:paddingStart="24dp"
-        android:paddingTop="28dp"
+        android:paddingStart="19dp"
+        android:paddingTop="15dp"
         android:paddingEnd="24dp"
         android:paddingBottom="22dp">
 
@@ -31,12 +31,200 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="85dp"
+            android:paddingStart="80dp"
             android:paddingTop="20dp"
-            android:text="Feed Control"
+            android:text="Feeder Control Manager"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
             android:textStyle="bold" />
     </RelativeLayout>
+
+    <!-- Content Section -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerSection1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Form Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambah Jadwal Baru"
+                android:layout_gravity="center_horizontal"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="15dp" />
+
+            <!-- Nama Jadwal Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Jadwal"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_nama_jadwal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/edittext_background"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Makanan atau Minuman Dropdown -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Makanan atau Minuman"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinner_makanan_minuman"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/spinner_background"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Tanggal Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanggal"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/et_tanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edittext_background"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:focusable="false"
+                    android:clickable="true" />
+
+                <ImageView
+                    android:id="@+id/ic_calendar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/baseline_calendar"
+                    app:tint="@color/gray" />
+            </RelativeLayout>
+
+            <!-- Waktu Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waktu"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tv_waktu_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="09:30"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="16dp" />
+
+                <!-- Hidden TimePicker (alternative approach) -->
+                <TimePicker
+                    android:id="@+id/time_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:timePickerMode="spinner" />
+
+            </LinearLayout>
+
+            <!-- Divider line under time -->
+            <View
+                android:layout_width="120dp"
+                android:layout_height="2dp"
+                android:background="@color/gray"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp" />
+
+            <!-- Buttons Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="16dp">
+
+                <!-- Kembali Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_kembali"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Kembali"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_dynamic_active"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Simpan Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_simpan"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="Simpan"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_dynamic_active"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

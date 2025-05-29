@@ -1,15 +1,185 @@
 <!-- res/layout/fragment_device.xml -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".Fragment.DeviceFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Device Fragment"
-        android:textSize="24sp"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:padding="24dp">
 
-</FrameLayout>
+
+        <!-- Card Container untuk WiFi Search -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- WiFi Icon dan Judul -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_search"
+                        android:tint="#009688"
+                        android:layout_marginEnd="12dp"
+                        tools:ignore="UseAppTint" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cari Smart Feeder"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"/>
+
+                </LinearLayout>
+
+                <!-- Search Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan nama device atau WiFi"
+                    app:boxStrokeColor="#4CAF50"
+                    app:hintTextColor="#4CAF50"
+                    android:layout_marginBottom="16dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSearchDevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:drawableStart="@android:drawable/ic_menu_search"
+                        android:drawablePadding="12dp"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Tombol Scan WiFi -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScanWifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Scan WiFi Smart Feeder"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#009688"
+                    app:cornerRadius="28dp"
+                    app:icon="@android:drawable/stat_sys_data_bluetooth"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Tombol Refresh -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRefresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Refresh"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:backgroundTint="#0A71C1"
+                    app:cornerRadius="24dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Status Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mencari device..."
+                    android:textSize="14sp"
+                    android:textColor="#666666"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/layoutEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="#009688"
+                android:layout_marginBottom="16dp"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Belum ada device yang ditemukan"
+                android:textSize="16sp"
+                android:textColor="#999999"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Klik tombol 'Scan WiFi' untuk mencari Smart Feeder"
+                android:textSize="14sp"
+                android:textColor="#BBBBBB"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

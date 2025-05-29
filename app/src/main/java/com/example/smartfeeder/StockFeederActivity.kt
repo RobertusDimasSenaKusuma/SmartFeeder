@@ -1,5 +1,6 @@
 package com.example.smartfeeder
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -63,14 +64,12 @@ class StockFeederActivity : AppCompatActivity() {
     }
 
     private fun handleBackButton() {
-        if (viewPager.currentItem > 0) {
-            // If not on first tab, go to previous tab
-            viewPager.currentItem = viewPager.currentItem - 1
-        } else {
-            // If on first tab, close activity
-            finish()
-            finish()
-            overridePendingTransition(0, 0)
-        }
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+
     }
+
+
 }

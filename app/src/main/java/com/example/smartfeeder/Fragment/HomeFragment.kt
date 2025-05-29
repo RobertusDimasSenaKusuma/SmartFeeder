@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.smartfeeder.FeedControlActivity
 import com.example.smartfeeder.MainActivity
 import com.example.smartfeeder.R
 import com.example.smartfeeder.StockFeederActivity
@@ -29,12 +30,18 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).setupCustomHomeActionBar("Selamat Datang,")
         }
 
-        // TAMBAHKAN ini untuk handle klik menu Feed Stock
+        // Handle klik menu Feed Stock
         view.findViewById<View>(R.id.menuFeedStock)?.setOnClickListener {
-            // Pindah ke StockFeederActivity ketika diklik
             startActivity(Intent(activity, StockFeederActivity::class.java))
-
         }
+
+// TAMBAHKAN tombol lain, misalnya untuk menu baru
+        view.findViewById<View>(R.id.menuFeedControl)?.setOnClickListener {
+            startActivity(Intent(activity, FeedControlActivity::class.java))
+        }
+
+
+
     }
 
     override fun onPause() {

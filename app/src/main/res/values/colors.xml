@@ -45,6 +45,20 @@
     <color name="orange">#FF6F07</color>
     <color name="gray">#808080</color>
 
+    <!-- New colors for the form -->
+    <color name="teal">#00BFA5</color>
+    <color name="gray_light">#E0E0E0</color>
+
+
+    <!-- Additional teal variations if needed -->
+    <color name="teal_dark">#00897B</color>
+    <color name="teal_light">#4DD0E1</color>
+
+    <!-- Additional gray variations if needed -->
+    <color name="gray_dark">#424242</color>
+    <color name="gray_medium">#9E9E9E</color>
+    <color name="gray_very_light">#F5F5F5</color>
+
 
     <color name="my_app_gradient_start_color">#00775B</color> <!-- Dari card_general.xml -->
     <color name="my_app_gradient_end_color">#00AF87</color> <!-- Dari card_general.xml -->
