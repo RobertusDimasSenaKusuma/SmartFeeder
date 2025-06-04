@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_device.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardDevice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <!-- Device Icon -->
+            <ImageView
+                android:id="@+id/ivDeviceIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/presence_online"
+                android:tint="#009688"
+                android:layout_marginEnd="12dp"
+                tools:ignore="UseAppTint" />
+
+            <!-- Device Name -->
+            <TextView
+                android:id="@+id/tvDeviceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Smart Feeder Ruang Tamu"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                tools:text="Smart Feeder Ruang Tamu" />
+
+            <!-- Status -->
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Online"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"
+                android:background="@drawable/status_background"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                tools:text="Online" />
+
+        </LinearLayout>
+
+        <!-- Device Info Grid -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
+
+            <!-- WiFi and IP Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:id="@+id/tvWifiSSID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="WiFi: HOME_WIFI_5G"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:drawableStart="@android:drawable/stat_sys_data_bluetooth"
+                    android:drawablePadding="4dp"
+                    tools:text="WiFi: HOME_WIFI_5G" />
+
+                <TextView
+                    android:id="@+id/tvIpAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="IP: 192.168.1.105"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:gravity="end"
+                    tools:text="IP: 192.168.1.105" />
+
+            </LinearLayout>
+
+            <!-- Battery and Last Seen Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:id="@+id/tvBatteryLevel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Baterai: 85%"
+                    android:textSize="12sp"
+                    android:textColor="#4CAF50"
+                    android:drawableStart="@android:drawable/ic_lock_power_off"
+                    android:drawablePadding="4dp"
+                    tools:text="Baterai: 85%" />
+
+                <TextView
+                    android:id="@+id/tvLastSeen"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Terakhir dilihat: 2 menit yang lalu"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:gravity="end"
+                    tools:text="Terakhir dilihat: 2 menit yang lalu" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginVertical="8dp" />
+
+        <!-- Next Feeding Schedule -->
+        <TextView
+            android:id="@+id/tvNextFeeding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jadwal berikutnya: 14:30 - Siang"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:textStyle="italic"
+            android:drawableStart="@android:drawable/ic_menu_recent_history"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            tools:text="Jadwal berikutnya: 14:30 - Siang" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,72 +1,101 @@
 package com.example.smartfeeder
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.smartfeeder.models.ScheduleModel
+import com.example.smartfeeder.utils.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
 class FeedControlActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
+    private lateinit var progressDialog: ProgressDialog
 
     // UI Components
     private lateinit var etNamaJadwal: EditText
-    private lateinit var spinnerMakananMinuman: Spinner
     private lateinit var etTanggal: EditText
+    private lateinit var spinnerMakananMinuman: Spinner
     private lateinit var tvWaktuDisplay: TextView
     private lateinit var btnSimpan: Button
     private lateinit var btnKembali: Button
 
     // Data
-    private var selectedDate: Calendar = Calendar.getInstance()
-    private var selectedTime: Calendar = Calendar.getInstance()
+    private val selectedDate: Calendar = Calendar.getInstance()
+    private val selectedTime: Calendar = Calendar.getInstance().apply {
+        add(Calendar.MINUTE, 10)
+    }
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    companion object {
+        private const val TAG = "FeedControlActivity"
+        private const val DEFAULT_DEVICE_ID = "feeder_001"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed_control)
 
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
-
-        // Setup transparent status bar (if needed)
+        initializeFirebase()
         setupTransparentStatusBar()
-
-        // Initialize UI components
         initializeViews()
-
-        // Setup dropdown
+        setupProgressDialog()
         setupMakananMinumanSpinner()
-
-        // Setup date picker
         setupDatePicker()
-
-        // Setup time picker
         setupTimePicker()
-
-        // Setup buttons
         setupButtons()
+    }
 
-        // Set up back button
-        findViewById<View>(R.id.btn_back).setOnClickListener {
-            handleBackButton()
+    private fun initializeFirebase() {
+        auth = FirebaseAuth.getInstance()
+        Log.d(TAG, "Checking authentication status")
+        if (auth.currentUser == null) {
+            signInAnonymously()
+        } else {
+            Log.d(TAG, "User already authenticated: ${auth.currentUser?.uid}")
+        }
+    }
+
+    private fun signInAnonymously() {
+        showProgressDialog("Connecting to Smart Feeder...")
+        lifecycleScope.launch {
+            try {
+                auth.signInAnonymously().await()
+                Log.d(TAG, "Anonymous sign-in successful: ${auth.currentUser?.uid}")
+                showToast("Connected to Smart Feeder")
+            } catch (e: Exception) {
+                Log.e(TAG, "Anonymous sign-in failed: ${e.message}", e)
+                showToast("Connection failed: ${e.message}")
+            } finally {
+                hideProgressDialog()
+            }
+        }
+    }
+
+    private fun setupProgressDialog() {
+        progressDialog = ProgressDialog(this).apply {
+            setMessage("Menyimpan jadwal...")
+            setCancelable(false)
         }
     }
 
     private fun setupTransparentStatusBar() {
         window.apply {
             statusBarColor = Color.TRANSPARENT
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 setDecorFitsSystemWindows(false)
                 insetsController?.setSystemBarsAppearance(
@@ -85,190 +114,242 @@ class FeedControlActivity : AppCompatActivity() {
     private fun initializeViews() {
         try {
             etNamaJadwal = findViewById(R.id.et_nama_jadwal)
-            spinnerMakananMinuman = findViewById(R.id.spinner_makanan_minuman)
             etTanggal = findViewById(R.id.et_tanggal)
+            spinnerMakananMinuman = findViewById(R.id.spinner_makanan_minuman)
             tvWaktuDisplay = findViewById(R.id.tv_waktu_display)
             btnSimpan = findViewById(R.id.btn_simpan)
             btnKembali = findViewById(R.id.btn_kembali)
+            findViewById<View>(R.id.btn_back)?.setOnClickListener { handleBackButton() }
         } catch (e: Exception) {
-            Toast.makeText(this, "Error initializing views: ${e.message}", Toast.LENGTH_LONG).show()
-            e.printStackTrace()
+            Log.e(TAG, "Error initializing views: ${e.message}", e)
+            showToast("Error initializing UI: ${e.message}")
         }
     }
 
     private fun setupMakananMinumanSpinner() {
-        // Data untuk dropdown
-        val makananMinumanOptions = arrayOf(
-            "Pilih Jenis",
-            "Makanan",
-            "Minuman"
-        )
-
-        // Create adapter
-        val adapter = ArrayAdapter(
+        val options = arrayOf("Pilih Jenis", "Makanan", "Air Minum", "Makanan + Air")
+        spinnerMakananMinuman.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
-            makananMinumanOptions
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            options
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
 
-        // Set adapter to spinner
-        spinnerMakananMinuman.adapter = adapter
-
-        // Set listener for spinner selection
         spinnerMakananMinuman.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = makananMinumanOptions[position]
-                if (position > 0) { // Skip first item "Pilih Jenis"
-                    // Optional: Remove toast or make it less intrusive
-                    // Toast.makeText(this@FeedControlActivity, "Dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
+                if (position > 0) {
+                    Log.d(TAG, "Selected food type: ${options[position]}")
                 }
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
     private fun setupDatePicker() {
-        // Set initial date display
+        // Set initial date to today
         etTanggal.setText(dateFormat.format(selectedDate.time))
 
-        // Make EditText non-editable but clickable
-        etTanggal.isFocusable = false
-        etTanggal.isClickable = true
-
-        // Set click listener for date picker
-        etTanggal.setOnClickListener {
-            showDatePicker()
-        }
-
-        // Also handle calendar icon click (with error handling)
-        try {
-            findViewById<View>(R.id.ic_calendar)?.setOnClickListener {
-                showDatePicker()
-            }
-        } catch (e: Exception) {
-            // Calendar icon might not exist in layout, that's okay
-            println("Calendar icon not found: ${e.message}")
-        }
+        etTanggal.setOnClickListener { showDatePicker() }
     }
 
     private fun showDatePicker() {
-        val datePickerDialog = DatePickerDialog(
+        DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
                 selectedDate.set(Calendar.YEAR, year)
                 selectedDate.set(Calendar.MONTH, month)
                 selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                // Update display
                 etTanggal.setText(dateFormat.format(selectedDate.time))
             },
             selectedDate.get(Calendar.YEAR),
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
-        )
-
-        // Set minimum date to today
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
-
-        datePickerDialog.show()
+        ).apply {
+            // Set minimum date to today
+            datePicker.minDate = System.currentTimeMillis() - 1000
+        }.show()
     }
 
     private fun setupTimePicker() {
-        // Set initial time display
-        selectedTime.set(Calendar.HOUR_OF_DAY, 9)
-        selectedTime.set(Calendar.MINUTE, 30)
         tvWaktuDisplay.text = timeFormat.format(selectedTime.time)
-
-        // Set click listener for time picker
-        tvWaktuDisplay.setOnClickListener {
-            showTimePicker()
-        }
+        tvWaktuDisplay.setOnClickListener { showTimePicker() }
     }
 
     private fun showTimePicker() {
-        val timePickerDialog = TimePickerDialog(
+        TimePickerDialog(
             this,
             { _, hourOfDay, minute ->
                 selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 selectedTime.set(Calendar.MINUTE, minute)
-
-                // Update display
+                selectedTime.set(Calendar.SECOND, 0)
+                selectedTime.set(Calendar.MILLISECOND, 0)
                 tvWaktuDisplay.text = timeFormat.format(selectedTime.time)
             },
             selectedTime.get(Calendar.HOUR_OF_DAY),
             selectedTime.get(Calendar.MINUTE),
-            true // 24 hour format
-        )
-
-        timePickerDialog.show()
+            true
+        ).show()
     }
 
     private fun setupButtons() {
-        // Kembali button
-        btnKembali.setOnClickListener {
-            handleBackButton()
-        }
-
-        // Simpan button
-        btnSimpan.setOnClickListener {
-            handleSimpanButton()
-        }
+        btnKembali.setOnClickListener { handleBackButton() }
+        btnSimpan.setOnClickListener { handleSimpanButton() }
     }
 
     private fun handleSimpanButton() {
-        // Get form data
         val namaJadwal = etNamaJadwal.text.toString().trim()
-        val selectedSpinnerPosition = spinnerMakananMinuman.selectedItemPosition
-        val tanggal = etTanggal.text.toString()
+        val tanggal = etTanggal.text.toString().trim()
+        val spinnerPosition = spinnerMakananMinuman.selectedItemPosition
         val waktu = tvWaktuDisplay.text.toString()
 
-        // Validation
-        if (namaJadwal.isEmpty()) {
-            etNamaJadwal.error = "Nama jadwal harus diisi"
-            etNamaJadwal.requestFocus()
+        if (!validateInput(namaJadwal, tanggal, spinnerPosition)) return
+        if (isScheduleInPast()) {
+            showToast("Tidak dapat menjadwalkan untuk waktu yang sudah berlalu")
             return
         }
 
-        if (selectedSpinnerPosition == 0) {
-            Toast.makeText(this, "Pilih jenis makanan atau minuman", Toast.LENGTH_SHORT).show()
-            return
+        val scheduleId = ScheduleModel.generateId()
+
+        // Combine selected date and time
+        val scheduledDateTime = Calendar.getInstance().apply {
+            set(Calendar.YEAR, selectedDate.get(Calendar.YEAR))
+            set(Calendar.MONTH, selectedDate.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, selectedDate.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY))
+            set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE))
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }
 
-        // Get selected spinner value
-        val jenisMakanan = spinnerMakananMinuman.selectedItem.toString()
+        val schedule = ScheduleModel(
+            id = scheduleId,
+            namaJadwal = namaJadwal,
+            jenisMakanan = spinnerMakananMinuman.selectedItem.toString(),
+            waktu = scheduledDateTime.time,
+            userId = auth.currentUser?.uid ?: ""
+        )
 
-        // Here you can save the data to Firebase or local database
-        saveScheduleData(namaJadwal, jenisMakanan, tanggal, waktu)
+        saveScheduleToFirebase(schedule)
     }
 
-    private fun saveScheduleData(namaJadwal: String, jenis: String, tanggal: String, waktu: String) {
-        try {
-            // Show loading
-            Toast.makeText(this, "Menyimpan jadwal...", Toast.LENGTH_SHORT).show()
-
-            // TODO: Implement save to Firebase
-            // For now, just show success message
-            Toast.makeText(this, "Jadwal berhasil disimpan!", Toast.LENGTH_LONG).show()
-
-            // Log the data for debugging
-            println("=== JADWAL TERSIMPAN ===")
-            println("Nama: $namaJadwal")
-            println("Jenis: $jenis")
-            println("Tanggal: $tanggal")
-            println("Waktu: $waktu")
-            println("Timestamp: ${System.currentTimeMillis()}")
-
-            // Clear form after successful save
-            clearForm()
-
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error menyimpan jadwal: ${e.message}", Toast.LENGTH_LONG).show()
-            e.printStackTrace()
+    private fun validateInput(namaJadwal: String, tanggal: String, spinnerPosition: Int): Boolean {
+        return when {
+            namaJadwal.isEmpty() -> {
+                etNamaJadwal.error = "Nama jadwal harus diisi"
+                etNamaJadwal.requestFocus()
+                false
+            }
+            namaJadwal.length < 3 -> {
+                etNamaJadwal.error = "Nama jadwal minimal 3 karakter"
+                etNamaJadwal.requestFocus()
+                false
+            }
+            tanggal.isEmpty() -> {
+                showToast("Pilih tanggal jadwal")
+                etTanggal.requestFocus()
+                false
+            }
+            spinnerPosition == 0 -> {
+                showToast("Pilih jenis makanan atau minuman")
+                false
+            }
+            else -> true
         }
+    }
+
+    private fun isScheduleInPast(): Boolean {
+        return try {
+            val now = Calendar.getInstance()
+            val scheduledDateTime = Calendar.getInstance().apply {
+                set(Calendar.YEAR, selectedDate.get(Calendar.YEAR))
+                set(Calendar.MONTH, selectedDate.get(Calendar.MONTH))
+                set(Calendar.DAY_OF_MONTH, selectedDate.get(Calendar.DAY_OF_MONTH))
+                set(Calendar.HOUR_OF_DAY, selectedTime.get(Calendar.HOUR_OF_DAY))
+                set(Calendar.MINUTE, selectedTime.get(Calendar.MINUTE))
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            scheduledDateTime.before(now)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking schedule time: ${e.message}", e)
+            false
+        }
+    }
+
+    private fun saveScheduleToFirebase(schedule: ScheduleModel) {
+        showProgressDialog("Menyimpan jadwal...")
+        lifecycleScope.launch {
+            FirebaseHelper.saveSchedule(schedule).fold(
+                onSuccess = { message ->
+                    Log.d(TAG, "Schedule saved successfully: ${schedule.id}")
+                    sendFeedingCommandToDevice(schedule)
+                    handleSaveSuccess(schedule, message)
+                },
+                onFailure = { error ->
+                    Log.e(TAG, "Failed to save schedule: ${error.message}", error)
+                    handleSaveError(error.message ?: "Unknown error")
+                }
+            )
+            hideProgressDialog()
+        }
+    }
+
+    private fun sendFeedingCommandToDevice(schedule: ScheduleModel) {
+        lifecycleScope.launch {
+            val portion = when (schedule.jenisMakanan) {
+                "Makanan" -> 50
+                "Air Minum" -> 100
+                "Makanan + Air" -> 75
+                else -> 50
+            }
+
+            FirebaseHelper.triggerFeeding(
+                deviceId = DEFAULT_DEVICE_ID,
+                scheduleId = schedule.id,
+                portion = portion
+            ).fold(
+                onSuccess = { Log.d(TAG, "Feeding command sent successfully for schedule: ${schedule.id}") },
+                onFailure = { error -> Log.e(TAG, "Failed to send feeding command for schedule: ${schedule.id}, error: ${error.message}", error) }
+            )
+        }
+    }
+
+    private fun handleSaveSuccess(schedule: ScheduleModel, message: String) {
+        logScheduleData(schedule)
+        clearForm()
+        showSuccessMessage(schedule, message)
+        setResult(RESULT_OK)
+        finish()
+    }
+
+    private fun handleSaveError(error: String) {
+        Log.e(TAG, "Save error: $error")
+        showToast(error)
+    }
+
+    private fun logScheduleData(schedule: ScheduleModel) {
+        Log.d(TAG, """
+            === JADWAL TERSIMPAN ===
+            ID: ${schedule.id}
+            Nama: ${schedule.namaJadwal}
+            Jenis: ${schedule.jenisMakanan}
+            Tanggal & Waktu: ${SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(schedule.waktu)}
+            User ID: ${schedule.userId}
+            ====================
+        """.trimIndent())
+    }
+
+    private fun showSuccessMessage(schedule: ScheduleModel, message: String) {
+        val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        showToast("""
+            $message
+            ${schedule.namaJadwal}
+            ${schedule.jenisMakanan}
+            ${dateTimeFormat.format(schedule.waktu)}
+            Smart Feeder akan otomatis memberikan makan sesuai jadwal.
+        """.trimIndent())
     }
 
     private fun clearForm() {
@@ -276,46 +357,52 @@ class FeedControlActivity : AppCompatActivity() {
             etNamaJadwal.setText("")
             spinnerMakananMinuman.setSelection(0)
 
-            // Reset to current date and default time
-            selectedDate = Calendar.getInstance()
-            selectedTime = Calendar.getInstance()
-            selectedTime.set(Calendar.HOUR_OF_DAY, 9)
-            selectedTime.set(Calendar.MINUTE, 30)
-
+            // Reset to current date
+            selectedDate.time = Date()
             etTanggal.setText(dateFormat.format(selectedDate.time))
+
+            // Reset time to 10 minutes from now
+            selectedTime.time = Date()
+            selectedTime.add(Calendar.MINUTE, 10)
             tvWaktuDisplay.text = timeFormat.format(selectedTime.time)
 
+            etNamaJadwal.error = null
         } catch (e: Exception) {
-            Toast.makeText(this, "Error clearing form: ${e.message}", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+            Log.e(TAG, "Error clearing form: ${e.message}", e)
+            showToast("Error clearing form")
         }
     }
 
     private fun handleBackButton() {
         try {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
             finish()
         } catch (e: Exception) {
-            Toast.makeText(this, "Error navigating back: ${e.message}", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+            Log.e(TAG, "Error navigating back: ${e.message}", e)
+            showToast("Error navigating back")
+            finish()
         }
     }
 
-    // Helper method to get selected data
-    fun getScheduleData(): Map<String, Any> {
-        return try {
-            mapOf(
-                "namaJadwal" to etNamaJadwal.text.toString(),
-                "jenis" to spinnerMakananMinuman.selectedItem.toString(),
-                "tanggal" to etTanggal.text.toString(),
-                "waktu" to tvWaktuDisplay.text.toString(),
-                "timestamp" to System.currentTimeMillis()
-            )
-        } catch (e: Exception) {
-            println("Error getting schedule data: ${e.message}")
-            emptyMap()
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showProgressDialog(message: String) {
+        progressDialog.setMessage(message)
+        progressDialog.show()
+    }
+
+    private fun hideProgressDialog() {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideProgressDialog()
     }
 }

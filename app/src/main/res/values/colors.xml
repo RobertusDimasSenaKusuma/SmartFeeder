@@ -34,7 +34,7 @@
     <!-- Biarkan warna lain yang sudah ada -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="blue">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
@@ -43,6 +43,7 @@
     <color name="transparent">#00000000</color>
     <color name="my_app_gray">#808080</color>
     <color name="orange">#FF6F07</color>
+    <color name="red">#780410</color>
     <color name="gray">#808080</color>
 
     <!-- New colors for the form -->
@@ -63,5 +64,31 @@
     <color name="my_app_gradient_start_color">#00775B</color> <!-- Dari card_general.xml -->
     <color name="my_app_gradient_end_color">#00AF87</color> <!-- Dari card_general.xml -->
     <color name="green">#00AF87</color> <!-- Dari card_general.xml -->
+
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF9800</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="textHint">#BDBDBD</color>
+
+    <!-- Background Colors -->
+    <color name="backgroundPrimary">#FFFFFF</color>
+    <color name="backgroundSecondary">#F5F5F5</color>
+
+    <!-- Status Colors -->
+    <color name="statusPending">#FF9800</color>
+    <color name="statusCompleted">#4CAF50</color>
+    <color name="statusCancelled">#F44336</color>
+    <color name="statusExpired">#9E9E9E</color>
+
+    <!-- Other Colors -->
+    <color name="divider">#E0E0E0</color>
+    <color name="error">#F44336</color>
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FF9800</color>
 
 </resources>

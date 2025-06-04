@@ -10,7 +10,7 @@
         android:id="@+id/headerSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_splash_decor_radius_bottom"
+        android:background="@drawable/bg_splash_decor"
         android:paddingStart="24dp"
         android:paddingTop="28dp"
         android:paddingEnd="24dp"
@@ -40,43 +40,14 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <!-- Tab Layout -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/stockTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headerSection"
-        android:background="@drawable/bg_white"
-        app:tabGravity="center"
-        app:tabIndicatorColor="@color/dynamic_button_color_primary"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/dynamic_button_color_primary"
-        app:tabTextColor="@color/dynamic_button_color_primary"
-        app:tabPaddingStart="44dp"
-        app:tabPaddingEnd="44dp"
-        android:paddingBottom="15dp"
-        android:elevation="4dp"/>
 
     <!-- View Pager -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/stockViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/stockTabLayout"
+        android:layout_below="@id/headerSection"
         android:background="@drawable/card_auth_white"
         android:clipToPadding="false"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white1"
-        app:itemIconTint="@color/bottom_nav_icon_tint_selector"
-        app:itemTextColor="@color/bottom_nav_icon_tint_selector"
-        app:itemActiveIndicatorStyle="@color/transparent"
-        android:elevation="4dp"
-        app:menu="@menu/bottom_nav"/>
-
 
 </RelativeLayout>

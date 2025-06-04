@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
-
+        android:padding="16dp">
 
         <!-- Card Container untuk WiFi Search -->
         <androidx.cardview.widget.CardView
@@ -20,13 +19,13 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="20dp">
 
                 <!-- WiFi Icon dan Judul -->
                 <LinearLayout
@@ -49,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Cari Smart Feeder"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#333333"/>
 
@@ -59,7 +58,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Masukkan nama device atau WiFi"
+                    android:hint="Cari berdasarkan nama, WiFi, atau IP"
                     app:boxStrokeColor="#4CAF50"
                     app:hintTextColor="#4CAF50"
                     android:layout_marginBottom="16dp"
@@ -75,32 +74,44 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Tombol Scan WiFi -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnScanWifi"
+                <!-- Tombol Container -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="Scan WiFi Smart Feeder"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="#009688"
-                    app:cornerRadius="28dp"
-                    app:icon="@android:drawable/stat_sys_data_bluetooth"
-                    app:iconGravity="textStart"
-                    app:iconPadding="8dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <!-- Tombol Refresh -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnRefresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="Refresh"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:backgroundTint="#0A71C1"
-                    app:cornerRadius="24dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                    <!-- Tombol Scan WiFi -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnScanWifi"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1.3"
+                        android:layout_marginEnd="8dp"
+                        android:text="Scan WiFi"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#009688"
+                        app:cornerRadius="24dp"
+                        app:icon="@android:drawable/stat_sys_data_bluetooth"
+                        app:iconGravity="textStart"
+                        app:iconPadding="4dp"/>
+
+                    <!-- Tombol Refresh -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRefresh"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="0.7"
+                        android:layout_marginStart="8dp"
+                        android:text="Refresh"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:backgroundTint="#0A71C1"
+                        app:cornerRadius="24dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -113,7 +124,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:visibility="gone">
 
             <LinearLayout
@@ -142,6 +153,13 @@
 
         </androidx.cardview.widget.CardView>
 
+        <!-- RecyclerView untuk Device List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:listitem="@layout/item_device"/>
 
         <!-- Empty State -->
         <LinearLayout
@@ -150,7 +168,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:visibility="visible">
 
             <ImageView
@@ -173,10 +191,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Klik tombol 'Scan WiFi' untuk mencari Smart Feeder"
-                android:textSize="14sp"
+                android:text="Klik tombol 'Scan WiFi' untuk mencari Smart Feeder yang terhubung ke Firebase"
+                android:textSize="13sp"
                 android:textColor="#BBBBBB"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:paddingHorizontal="24dp"/>
 
         </LinearLayout>
 

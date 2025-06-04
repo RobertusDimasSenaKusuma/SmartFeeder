@@ -11,4 +11,71 @@
     <string name="title_schedule">Schedule</string>
     <string name="default_name">Pet Owner</string>
     <string name="default_email">petowner@mail.com</string>
+
+
+
+    <!-- Schedule Activity -->
+
+    <string name="empty_schedule">Belum ada jadwal pemberian makan.\nTambahkan jadwal baru dengan tombol + di bawah.</string>
+
+    <!-- Schedule Status -->
+    <string name="status_pending">Menunggu</string>
+    <string name="status_completed">Selesai</string>
+    <string name="status_cancelled">Dibatalkan</string>
+    <string name="status_expired">Kedaluwarsa</string>
+
+    <!-- Schedule Info -->
+    <string name="total_schedules">Total Jadwal</string>
+    <string name="active_schedules">Aktif</string>
+    <string name="completed_schedules">Selesai</string>
+
+    <!-- Time Information -->
+    <string name="time_in_days">Dalam %d hari</string>
+    <string name="time_in_hours">Dalam %d jam</string>
+    <string name="time_in_minutes">Dalam %d menit</string>
+    <string name="time_overdue">Sudah lewat waktu</string>
+
+    <!-- Dialog Messages -->
+    <string name="dialog_choose_action">Pilih Aksi</string>
+    <string name="dialog_view_detail">Lihat Detail</string>
+    <string name="dialog_edit_schedule">Edit Jadwal</string>
+    <string name="dialog_delete_schedule">Hapus Jadwal</string>
+    <string name="dialog_delete_confirmation">Yakin ingin menghapus jadwal \'%s\'?</string>
+    <string name="dialog_delete">Hapus</string>
+    <string name="dialog_cancel">Batal</string>
+    <string name="dialog_ok">OK</string>
+
+    <!-- Success Messages -->
+    <string name="success_schedule_deleted">Jadwal berhasil dihapus</string>
+    <string name="success_schedule_activated">Jadwal diaktifkan</string>
+    <string name="success_schedule_deactivated">Jadwal dinonaktifkan</string>
+
+    <!-- Error Messages -->
+    <string name="error_load_schedules">Gagal memuat jadwal: %s</string>
+    <string name="error_delete_schedule">Gagal menghapus jadwal: %s</string>
+    <string name="error_update_status">Gagal mengubah status: %s</string>
+
+    <!-- Schedule Detail -->
+    <string name="detail_schedule_name">Nama Jadwal: %s</string>
+    <string name="detail_food_type">Jenis Makanan: %s</string>
+    <string name="detail_date">Tanggal: %s</string>
+    <string name="detail_time">Waktu: %s</string>
+    <string name="detail_device_id">Device ID: %s</string>
+    <string name="detail_status">Status: %s</string>
+    <string name="detail_active">Aktif: %s</string>
+    <string name="detail_created_at">Dibuat: %s</string>
+    <string name="detail_time_remaining">Sisa waktu: %d menit</string>
+    <string name="detail_schedule_passed">Jadwal sudah lewat</string>
+
+    <!-- Common -->
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="loading">Memuat...</string>
+    <string name="refresh">Segarkan</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_delete_schedule">Hapus jadwal</string>
+    <string name="cd_add_schedule">Tambah jadwal</string>
+    <string name="cd_schedule_status">Status jadwal</string>
+    <string name="cd_schedule_time">Waktu jadwal</string>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.smartfeeder.FeedControlActivity
 import com.example.smartfeeder.MainActivity
 import com.example.smartfeeder.R
+import com.example.smartfeeder.ScheduleActivity
 import com.example.smartfeeder.StockFeederActivity
 
 class HomeFragment : Fragment() {
@@ -38,6 +39,10 @@ class HomeFragment : Fragment() {
 // TAMBAHKAN tombol lain, misalnya untuk menu baru
         view.findViewById<View>(R.id.menuFeedControl)?.setOnClickListener {
             startActivity(Intent(activity, FeedControlActivity::class.java))
+        }
+
+        view.findViewById<View>(R.id.menuSchedule)?.setOnClickListener {
+            startActivity(Intent(activity, ScheduleActivity::class.java))
         }
 
 

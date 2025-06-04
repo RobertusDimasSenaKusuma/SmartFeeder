@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 class StockFeederActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +28,10 @@ class StockFeederActivity : AppCompatActivity() {
 
         // Initialize ViewPager and TabLayout
         viewPager = findViewById(R.id.stockViewPager)
-        tabLayout = findViewById(R.id.stockTabLayout)
 
         // Set up the ViewPager with the adapter
         val adapter = StockPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
-
-        // Connect the TabLayout with the ViewPager
-        tabLayout.setupWithViewPager(viewPager)
 
         // Set up back button
         findViewById<View>(R.id.btn_back).setOnClickListener {
@@ -68,8 +63,5 @@ class StockFeederActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
-
     }
-
-
 }
